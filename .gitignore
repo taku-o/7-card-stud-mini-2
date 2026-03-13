@@ -1,0 +1,26 @@
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Claude Code
+AGENTS.md
+CLAUDE.md
+CLAUDE.local.md
+.claude/worktrees/
+
+# Serena
+.serena/memories/
+.serena/cache/
+.serena/logs/
+
+# Misc
+.env
+.env.local
+
