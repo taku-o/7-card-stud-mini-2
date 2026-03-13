@@ -20,6 +20,9 @@ CLAUDE.local.md
 .serena/cache/
 .serena/logs/
 
+# Build output
+dist/
+
 # Misc
 .env
 .env.local
