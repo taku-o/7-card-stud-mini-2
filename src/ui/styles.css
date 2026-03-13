@@ -1,0 +1,148 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #1a5c2a;
+  color: #fff;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+#app {
+  max-width: 800px;
+  width: 100%;
+}
+
+.game-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.game-header h1 {
+  font-size: 1.8rem;
+  margin-bottom: 8px;
+}
+
+.game-header p {
+  font-size: 0.85rem;
+  color: #ccc;
+}
+
+.cpu-area,
+.player-area {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.cpu-area h2,
+.player-area h2 {
+  font-size: 1rem;
+  margin-bottom: 8px;
+  color: #aad;
+}
+
+.stack-display {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  color: #ffd700;
+}
+
+.info-area {
+  text-align: center;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+.pot-display {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #ffd700;
+}
+
+.street-display {
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
+
+.message-display {
+  margin-top: 8px;
+  font-size: 1rem;
+  min-height: 1.5em;
+}
+
+.cards-container,
+[data-testid='player-cards'],
+[data-testid='cpu-cards'] {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.card {
+  width: 60px;
+  height: 85px;
+  border: 2px solid #fff;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: bold;
+  background: #fff;
+  color: #000;
+}
+
+.card--red {
+  color: #d00;
+}
+
+.card--face-down {
+  background: #336;
+  color: #aaa;
+  font-size: 1.5rem;
+}
+
+.action-panel {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.action-panel button,
+.control-panel button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background: #2a7a3a;
+  color: #fff;
+  transition: opacity 0.2s;
+}
+
+.action-panel button:disabled,
+.control-panel button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.action-panel button:not(:disabled):hover,
+.control-panel button:not(:disabled):hover {
+  background: #3a9a4a;
+}
+
+.control-panel {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 12px;
+}
