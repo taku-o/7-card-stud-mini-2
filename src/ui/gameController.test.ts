@@ -290,3 +290,54 @@ describe('ゲームフロー: 複数ラウンド', () => {
     expect(text).toContain('980');
   });
 });
+
+// ========== 統計パネル: ラウンド終了後の統計更新 ==========
+
+describe('統計パネル: ラウンド終了後の統計更新', () => {
+  it('フォールド後に統計パネルが更新される', () => {
+    // Given
+    const controller = createGameController(container);
+    controller.startNewGame();
+
+    // When: フォールドでラウンド終了
+    controller.handlePlayerAction('fold');
+
+    // Then: 統計パネルにゲーム数 1 が表示される
+    const statsPanel = container.querySelector('[data-testid="stats-panel"]');
+    expect(statsPanel!.textContent).toContain('1');
+  });
+
+  it('複数ラウンドで統計が累積される', () => {
+    // Given
+    const controller = createGameController(container);
+    controller.startNewGame();
+
+    // When: 2ラウンドをフォールドで終了
+    controller.handlePlayerAction('fold');
+    controller.startNextRound();
+    controller.handlePlayerAction('fold');
+
+    // Then: 統計パネルにゲーム数 2 が表示される
+    const statsPanel = container.querySelector('[data-testid="stats-panel"]');
+    expect(statsPanel!.textContent).toContain('2');
+  });
+});
+
+// ========== 統計パネル: 新規ゲームで統計リセット ==========
+
+describe('統計パネル: 新規ゲームで統計リセット', () => {
+  it('新規ゲーム開始で統計がリセットされる', () => {
+    // Given: 1ラウンドプレイ後
+    const controller = createGameController(container);
+    controller.startNewGame();
+    controller.handlePlayerAction('fold');
+
+    // When: 新規ゲーム開始
+    controller.startNewGame();
+
+    // Then: 統計パネルの内容がリセットされている（ゲーム数 0）
+    const statsPanel = container.querySelector('[data-testid="stats-panel"]');
+    const text = statsPanel!.textContent!;
+    expect(text).toMatch(/0/);
+  });
+});

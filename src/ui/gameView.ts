@@ -1,5 +1,6 @@
 import type { EngineState, PlayerActionType } from '../domain/gameEngine';
 import type { RoundResult } from '../domain/gameState';
+import type { Stats } from '../domain/statsTracker';
 import { renderCards } from './cardRenderer';
 
 const ACTION_TYPES: PlayerActionType[] = ['bet', 'call', 'check', 'fold'];
@@ -11,6 +12,7 @@ export type GameView = {
   showCpuThinking(): void;
   showRoundResult(result: RoundResult): void;
   onAction(callback: ActionCallback): void;
+  updateStats(stats: Stats): void;
   onNewGame(callback: () => void): void;
   onNextRound(callback: () => void): void;
 };
@@ -179,9 +181,14 @@ export function createGameView(container: HTMLElement): GameView {
     newGameBtn.addEventListener('click', callback);
   }
 
+  function updateStats(stats: Stats): void {
+    statsPanel.textContent =
+      `ゲーム数: ${stats.games} | 勝利: ${stats.wins} | 敗北: ${stats.losses} | 勝率: ${stats.winRate}%`;
+  }
+
   function onNextRound(callback: () => void): void {
     nextRoundBtn.addEventListener('click', callback);
   }
 
-  return { render, showCpuThinking, showRoundResult, onAction, onNewGame, onNextRound };
+  return { render, showCpuThinking, showRoundResult, updateStats, onAction, onNewGame, onNextRound };
 }

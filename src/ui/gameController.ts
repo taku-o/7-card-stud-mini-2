@@ -7,6 +7,7 @@ import {
   processCpuAction,
 } from '../domain/gameEngine';
 import { decideAction, PRESET_DEFAULT } from '../domain/cpuStrategy';
+import { createInitialStats, recordResult } from '../domain/statsTracker';
 import { createGameView } from './gameView';
 
 const INITIAL_STACK = 1000;
@@ -28,6 +29,7 @@ export function createGameController(container: HTMLElement): GameController {
   let playerStack = INITIAL_STACK;
   let cpuStack = INITIAL_STACK;
   let cpuThinking = false;
+  let stats = createInitialStats();
 
   function renderCurrentState(): void {
     const actions = getAvailableActions(engineState);
@@ -57,6 +59,8 @@ export function createGameController(container: HTMLElement): GameController {
       playerStack = engineState.playerStack;
       cpuStack = engineState.cpuStack;
       view.showRoundResult(engineState.roundResult);
+      stats = recordResult(stats, engineState.roundResult.winner);
+      view.updateStats(stats);
     }
   }
 
@@ -82,6 +86,8 @@ export function createGameController(container: HTMLElement): GameController {
   function startNewGame(): void {
     playerStack = INITIAL_STACK;
     cpuStack = INITIAL_STACK;
+    stats = createInitialStats();
+    view.updateStats(stats);
     startRound();
   }
 

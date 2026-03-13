@@ -4,6 +4,7 @@ import { createGameView } from './gameView';
 import type { EngineState, PlayerActionType } from '../domain/gameEngine';
 import type { RoundResult } from '../domain/gameState';
 import type { Card } from '../domain/card';
+import type { Stats } from '../domain/statsTracker';
 
 // ========== テストヘルパー ==========
 
@@ -431,5 +432,71 @@ describe('onNextRound: 次ラウンドボタン', () => {
 
     // Then
     expect(callback).toHaveBeenCalledOnce();
+  });
+});
+
+// ========== updateStats: 統計パネルの表示 ==========
+
+describe('updateStats: 統計パネルの表示', () => {
+  it('ゲーム数・勝利数・敗北数・勝率が統計パネルに表示される', () => {
+    // Given
+    const view = createGameView(container);
+    const stats: Stats = {
+      games: 10,
+      wins: 6,
+      losses: 3,
+      draws: 1,
+      winRate: 60,
+    };
+
+    // When
+    view.updateStats(stats);
+
+    // Then
+    const statsPanel = container.querySelector('[data-testid="stats-panel"]');
+    const text = statsPanel!.textContent!;
+    expect(text).toContain('10');
+    expect(text).toContain('6');
+    expect(text).toContain('3');
+    expect(text).toContain('60');
+  });
+
+  it('勝率 0% が正しく表示される', () => {
+    // Given
+    const view = createGameView(container);
+    const stats: Stats = {
+      games: 2,
+      wins: 0,
+      losses: 2,
+      draws: 0,
+      winRate: 0,
+    };
+
+    // When
+    view.updateStats(stats);
+
+    // Then
+    const statsPanel = container.querySelector('[data-testid="stats-panel"]');
+    const text = statsPanel!.textContent!;
+    expect(text).toContain('0');
+  });
+
+  it('初期状態（全て 0）が正しく表示される', () => {
+    // Given
+    const view = createGameView(container);
+    const stats: Stats = {
+      games: 0,
+      wins: 0,
+      losses: 0,
+      draws: 0,
+      winRate: 0,
+    };
+
+    // When
+    view.updateStats(stats);
+
+    // Then
+    const statsPanel = container.querySelector('[data-testid="stats-panel"]');
+    expect(statsPanel!.textContent).toBeTruthy();
   });
 });
